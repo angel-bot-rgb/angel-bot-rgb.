@@ -5,91 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AngelBot</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <div class="sidebar">
-        <img src="logo.jpg" alt="Logo preta" class="logo">
-        <div class="chat-list" id="chat-list">
-            <p>📄 Chat 1</p>
-            <p>📄 Chat 2</p>
-            <p>📄 Chat 3</p>
-        </div>
+    <div class="container">
+        
+        <!-- Barra lateral -->
+        <aside class="sidebar">
+            <div class="menu-top">
+                <a href="novo-chat.html" class="menu-item">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Novo chat
+                </a>
+                <a href="procurar-chats.html" class="menu-item">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Procurar chats
+                </a>
+                <a href="biblioteca.html" class="menu-item">
+                    <i class="fa-solid fa-image"></i>
+                    Biblioteca
+                </a>
+            </div>
+
+            <div class="menu-chats">
+                <p class="chats-title">Chats</p>
+                <a href="editar-imagens.html" class="chat-item active">Editar imagens AngelBot</a>
+                <a href="adicionar-ingles.html" class="chat-item">Adicionar em inglês</a>
+                <a href="erro-python.html" class="chat-item">Erro no código Python</a>
+                <a href="imagem-chatbot.html" class="chat-item">Imagem de chatbot</a>
+                <a href="criar-chatbot.html" class="chat-item">Criar chatbot gratuito</a>
+            </div>
+        </aside>
+
+        <!-- Área principal do chat -->
+        <main class="chat-area">
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo AngelBot" class="logo">
+            </div>
+            <h1>Como posso ajudar hoje?</h1>
+            <div class="chat-box" id="chat-box">
+                <p><strong>Você:</strong> ola</p>
+                <p><strong>Bot:</strong> Entendi sua mensagem.</p>
+            </div>
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Digite sua mensagem...">
+                <button>Enviar</button>
+                <button class="clear-btn">Apagar</button>
+            </div>
+        </main>
     </div>
-
-    <div class="main">
-        <div class="logo-center">
-            <img src="logo_transparente.png" alt="Logo transparente">
-        </div>
-        <h1>Como posso ajudar hoje?</h1>
-
-        <!-- Área de mensagens -->
-        <div class="chat-box" id="chat-box"></div>
-
-        <!-- Campo de envio -->
-        <div class="input-area">
-            <input type="text" id="user-input" placeholder="Digite sua mensagem...">
-            <button id="send-btn">Enviar</button>
-            <button id="clear-btn" class="danger">🗑️ Apagar</button>
-        </div>
-    </div>
-
-    <script>
-        const chatBox = document.getElementById("chat-box");
-        const userInput = document.getElementById("user-input");
-        const sendBtn = document.getElementById("send-btn");
-        const clearBtn = document.getElementById("clear-btn");
-
-        // Carregar histórico salvo
-        window.onload = () => {
-            const saved = localStorage.getItem("chatHistory");
-            if (saved) {
-                chatBox.innerHTML = saved;
-            }
-        };
-
-        // Salvar histórico
-        function saveHistory() {
-            localStorage.setItem("chatHistory", chatBox.innerHTML);
-        }
-
-        // Enviar mensagem
-        function sendMessage() {
-            const message = userInput.value.trim();
-            if (message === "") return;
-
-            const userMsg = document.createElement("div");
-            userMsg.classList.add("user-msg");
-            userMsg.textContent = "Você: " + message;
-            chatBox.appendChild(userMsg);
-
-            setTimeout(() => {
-                const botMsg = document.createElement("div");
-                botMsg.classList.add("bot-msg");
-                botMsg.textContent = "Bot: Entendi sua mensagem.";
-                chatBox.appendChild(botMsg);
-                chatBox.scrollTop = chatBox.scrollHeight;
-                saveHistory();
-            }, 500);
-
-            saveHistory();
-            userInput.value = "";
-        }
-
-        // Clique no botão
-        sendBtn.addEventListener("click", sendMessage);
-
-        // Enter para enviar
-        userInput.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") {
-                sendMessage();
-            }
-        });
-
-        // Apagar histórico
-        clearBtn.addEventListener("click", () => {
-            chatBox.innerHTML = "";
-            localStorage.removeItem("chatHistory");
-        });
-    </script>
 </body>
 </html>
