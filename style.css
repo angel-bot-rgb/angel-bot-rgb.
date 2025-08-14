@@ -1,67 +1,108 @@
+/* Fundo escuro e tipografia elegante */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #121212;
-  color: white;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #343541;
+    color: #ececf1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-header {
-  text-align: center;
-  padding: 20px;
-}
-
-.logo {
-  width: 80px;
-  height: auto;
-  border-radius: 10px;
-}
-
+/* Título */
 h1 {
-  margin: 10px 0 0;
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: 600;
 }
 
-#chat-container {
-  background: #1e1e1e;
-  border-radius: 10px;
-  padding: 15px;
-  width: 90%;
-  max-width: 600px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+/* Container do chat */
+.chat-container {
+    width: 100%;
+    max-width: 900px;
+    background-color: #444654;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 80vh;
+    margin-top: 20px;
 }
 
-#messages {
-  height: 300px;
-  overflow-y: auto;
-  border-bottom: 1px solid #333;
-  padding-bottom: 10px;
+/* Área das mensagens */
+.messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-#input-container {
-  display: flex;
-  margin-top: 10px;
+/* Mensagem do usuário */
+.message.user {
+    background-color: #343541;
+    align-self: flex-end;
+    padding: 12px 16px;
+    border-radius: 12px;
+    max-width: 80%;
+    color: #ececf1;
 }
 
-#user-input {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 5px 0 0 5px;
-  outline: none;
+/* Mensagem do bot */
+.message.bot {
+    background-color: #444654;
+    align-self: flex-start;
+    padding: 12px 16px;
+    border-radius: 12px;
+    max-width: 80%;
+    color: #ececf1;
 }
 
-#send-btn {
-  background-color: #4cafef;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
+/* Área de entrada */
+.input-container {
+    display: flex;
+    background-color: #40414f;
+    padding: 10px;
+    border-top: 1px solid #565869;
 }
 
-#send-btn:hover {
-  background-color: #3aa7e0;
+.input-container input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    background-color: #343541;
+    color: white;
+    font-size: 14px;
 }
+
+.input-container button {
+    background-color: #10a37f;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    margin-left: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.input-container button:hover {
+    background-color: #0e8c6c;
+}
+
+/* Scrollbar personalizada */
+.messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background-color: #565869;
+    border-radius: 3px;
+}
+
+
