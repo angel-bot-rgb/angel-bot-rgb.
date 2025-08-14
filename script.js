@@ -1,36 +1,45 @@
+const predefinedResponses = {
+    "olá": "Olá! Eu sou o AngelBot, seu assistente.",
+    "quem é você?": "Eu sou o AngelBot, criado para ajudar você!",
+    "qual é o seu objetivo?": "Ajudar com informações e responder perguntas!"
+};
+
 document.getElementById("send-btn").addEventListener("click", sendMessage);
-document.getElementById("clear-btn").addEventListener("click", clearChat);
+document.getElementById("user-input").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") sendMessage();
+});
 
-function sendMessage() {
-    let userInput = document.getElementById("user-input").value;
-    if (userInput.trim() === "") return;
-
-    let chatBox = document.getElementById("chat-box");
-
-    let userMessage = document.createElement("p");
-    userMessage.innerHTML = `<strong>Você:</strong> ${userInput}`;
-    chatBox.appendChild(userMessage);
-
-    // Resposta automática
-    let botMessage = document.createElement("p");
-    botMessage.innerHTML = `<strong>Bot:</strong> ${getBotResponse(userInput)}`;
-    chatBox.appendChild(botMessage);
-
-    document.getElementById("user-input").value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
+function addMessage(text, sender) {
+    const msgDiv = document.createElement("div");
+    msgDiv.classList.add("message", sender);
+    msgDiv.textContent = text;
+    document.getElementById("messages").appendChild(msgDiv);
+    document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
 }
 
-function getBotResponse(message) {
-    // Aqui você pode trocar pelas respostas reais do seu bot
-    if (message.toLowerCase().includes("ola")) {
-        return "Olá! Como você está hoje?";
-    } else if (message.toLowerCase().includes("ajuda")) {
-        return "Claro! Me diga com o que você precisa.";
-    } else {
-        return "Entendi sua mensagem.";
+async function sendMessage() {
+    const input = document.getElementById("user-input");
+    const text = input.value.trim();
+    if (!text) return;
+
+    addMessage(text, "user");
+    input.value = "";
+
+    const lowerText = text.toLowerCase();
+    if (predefinedResponses[lowerText]) {
+        addMessage(predefinedResponses[lowerText], "bot");
+        return;
     }
-}
 
-function clearChat() {
-    document.getElementById("chat-box").innerHTML = "";
+    try {
+        const res = await fetch("https://SEU_BACKEND/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: text })
+        });
+        const data = await res.json();
+        addMessage(data.reply, "bot");
+    } catch (err) {
+        addMessage("Desculpe, houve um erro ao conectar com a API.", "bot");
+    }
 }
