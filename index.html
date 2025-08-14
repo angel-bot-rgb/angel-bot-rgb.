@@ -1,26 +1,194 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AngelBot</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AngelBot</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #1e1e1e;
+        color: white;
+        display: flex;
+        height: 100vh;
+    }
+
+    /* Barra lateral */
+    .sidebar {
+        width: 260px;
+        background-color: #111;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        border-right: 1px solid #333;
+    }
+    .sidebar h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .chat-list {
+        flex: 1;
+        overflow-y: auto;
+    }
+    .chat-item {
+        padding: 8px;
+        background: #222;
+        margin-bottom: 6px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .chat-item:hover {
+        background: #333;
+    }
+    .new-chat {
+        background: #007bff;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .new-chat:hover {
+        background: #0056b3;
+    }
+
+    /* Área principal */
+    .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .chat-box {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+    }
+    .message {
+        max-width: 70%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        line-height: 1.4;
+    }
+    .user {
+        background: #007bff;
+        align-self: flex-end;
+    }
+    .bot {
+        background: #333;
+        align-self: flex-start;
+    }
+
+    /* Campo de envio */
+    .input-area {
+        display: flex;
+        padding: 10px;
+        background: #111;
+        border-top: 1px solid #333;
+    }
+    .input-area input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+        outline: none;
+    }
+    .input-area button {
+        padding: 10px 20px;
+        background: #007bff;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .input-area button:hover {
+        background: #0056b3;
+    }
+</style>
 </head>
 <body>
-    <header>
-        <img src="logo.jpg" alt="Logo AngelBot" class="logo">
-        <h1>AngelBot</h1>
-    </header>
 
-    <div id="chat-container">
-        <div id="messages"></div>
-        <div id="input-container">
-            <input type="text" id="user-input" placeholder="Digite sua mensagem...">
-            <button id="send-btn">Enviar</button>
-        </div>
+<div class="sidebar">
+    <h2>💬 AngelBot</h2>
+    <div class="chat-list" id="chatList"></div>
+    <div class="new-chat" onclick="newChat()">+ Novo Chat</div>
+</div>
+
+<div class="main">
+    <div class="chat-box" id="chatBox">
+        <div class="message bot">👋 Como posso ajudar hoje?</div>
     </div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Digite sua mensagem...">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
+</div>
 
-    <script src="script.js"></script>
+<script>
+let chats = JSON.parse(localStorage.getItem("chats")) || {};
+let currentChat = "chat_" + Date.now();
+chats[currentChat] = [{ role: "bot", text: "👋 Como posso ajudar hoje?" }];
+localStorage.setItem("chats", JSON.stringify(chats));
+loadChatList();
+renderChat();
+
+function loadChatList() {
+    const chatList = document.getElementById("chatList");
+    chatList.innerHTML = "";
+    Object.keys(chats).forEach(id => {
+        let div = document.createElement("div");
+        div.className = "chat-item";
+        div.innerText = chats[id][0]?.text || "Chat";
+        div.onclick = () => { currentChat = id; renderChat(); };
+        chatList.appendChild(div);
+    });
+}
+
+function renderChat() {
+    const chatBox = document.getElementById("chatBox");
+    chatBox.innerHTML = "";
+    chats[currentChat].forEach(msg => {
+        let div = document.createElement("div");
+        div.className = "message " + (msg.role === "user" ? "user" : "bot");
+        div.innerText = msg.text;
+        chatBox.appendChild(div);
+    });
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function sendMessage() {
+    const input = document.getElementById("userInput");
+    const text = input.value.trim();
+    if (!text) return;
+    chats[currentChat].push({ role: "user", text });
+    renderChat();
+    input.value = "";
+    setTimeout(() => {
+        const botReply = "🤖 Você disse: " + text;
+        chats[currentChat].push({ role: "bot", text: botReply });
+        localStorage.setItem("chats", JSON.stringify(chats));
+        renderChat();
+    }, 500);
+    localStorage.setItem("chats", JSON.stringify(chats));
+}
+
+function newChat() {
+    currentChat = "chat_" + Date.now();
+    chats[currentChat] = [{ role: "bot", text: "👋 Como posso ajudar hoje?" }];
+    localStorage.setItem("chats", JSON.stringify(chats));
+    loadChatList();
+    renderChat();
+}
+</script>
+
 </body>
 </html>
+
+
 
