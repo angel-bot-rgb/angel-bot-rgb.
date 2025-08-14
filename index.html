@@ -7,29 +7,89 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Barra lateral -->
     <div class="sidebar">
-        <img src="logo.jpg" alt="Logo preta" class="sidebar-logo">
-        <ul class="chat-list">
-            <li>📜 Chat 1</li>
-            <li>📜 Chat 2</li>
-            <li>📜 Chat 3</li>
-        </ul>
+        <img src="logo.jpg" alt="Logo preta" class="logo">
+        <div class="chat-list" id="chat-list">
+            <p>📄 Chat 1</p>
+            <p>📄 Chat 2</p>
+            <p>📄 Chat 3</p>
+        </div>
     </div>
 
-    <!-- Conteúdo principal -->
     <div class="main">
         <div class="logo-center">
             <img src="logo_transparente.png" alt="Logo transparente">
         </div>
         <h1>Como posso ajudar hoje?</h1>
+
+        <!-- Área de mensagens -->
         <div class="chat-box" id="chat-box"></div>
+
+        <!-- Campo de envio -->
         <div class="input-area">
             <input type="text" id="user-input" placeholder="Digite sua mensagem...">
             <button id="send-btn">Enviar</button>
+            <button id="clear-btn" class="danger">🗑️ Apagar</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const chatBox = document.getElementById("chat-box");
+        const userInput = document.getElementById("user-input");
+        const sendBtn = document.getElementById("send-btn");
+        const clearBtn = document.getElementById("clear-btn");
+
+        // Carregar histórico salvo
+        window.onload = () => {
+            const saved = localStorage.getItem("chatHistory");
+            if (saved) {
+                chatBox.innerHTML = saved;
+            }
+        };
+
+        // Salvar histórico
+        function saveHistory() {
+            localStorage.setItem("chatHistory", chatBox.innerHTML);
+        }
+
+        // Enviar mensagem
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message === "") return;
+
+            const userMsg = document.createElement("div");
+            userMsg.classList.add("user-msg");
+            userMsg.textContent = "Você: " + message;
+            chatBox.appendChild(userMsg);
+
+            setTimeout(() => {
+                const botMsg = document.createElement("div");
+                botMsg.classList.add("bot-msg");
+                botMsg.textContent = "Bot: Entendi sua mensagem.";
+                chatBox.appendChild(botMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+                saveHistory();
+            }, 500);
+
+            saveHistory();
+            userInput.value = "";
+        }
+
+        // Clique no botão
+        sendBtn.addEventListener("click", sendMessage);
+
+        // Enter para enviar
+        userInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        });
+
+        // Apagar histórico
+        clearBtn.addEventListener("click", () => {
+            chatBox.innerHTML = "";
+            localStorage.removeItem("chatHistory");
+        });
+    </script>
 </body>
 </html>
