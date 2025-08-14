@@ -1,9 +1,10 @@
 body {
     margin: 0;
-    display: flex;
+    padding: 0;
+    font-family: Arial, sans-serif;
     background-color: #111;
     color: white;
-    font-family: Arial, sans-serif;
+    display: flex;
 }
 
 /* Barra lateral */
@@ -11,63 +12,96 @@ body {
     width: 250px;
     background-color: #1a1a1a;
     padding: 20px;
+    box-sizing: border-box;
 }
 
-.sidebar-logo {
-    width: 120px;
-    display: block;
-    margin: 0 auto 20px;
+.logo {
+    width: 100%;
+    border-radius: 10px;
 }
 
-.chat-list {
-    list-style: none;
-    padding: 0;
-}
-
-.chat-list li {
-    padding: 8px 0;
+.chat-list p {
+    margin: 15px 0;
+    cursor: pointer;
 }
 
 /* Área principal */
 .main {
     flex: 1;
+    padding: 20px;
     text-align: center;
-    padding: 30px;
 }
 
 .logo-center img {
-    width: 150px;
-    margin-bottom: 20px;
+    width: 100px;
+    margin-bottom: 10px;
 }
 
+h1 {
+    font-size: 24px;
+}
+
+/* Caixa de chat */
 .chat-box {
-    background-color: #222;
+    background: transparent;
+    border: 1px solid #333;
     height: 300px;
     margin: 20px auto;
-    border-radius: 10px;
     padding: 10px;
-    overflow-y: auto;
     width: 60%;
+    text-align: left;
+    overflow-y: auto;
+    border-radius: 8px;
 }
 
+.user-msg {
+    background-color: #0056b3;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.bot-msg {
+    background-color: #333;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+/* Campo de entrada */
 .input-area {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    margin-top: 10px;
 }
 
-.input-area input {
+input {
     width: 50%;
     padding: 8px;
     border-radius: 5px;
     border: none;
+    margin-right: 5px;
 }
 
-.input-area button {
-    padding: 8px 15px;
+button {
+    padding: 8px 12px;
     border: none;
-    background-color: #1e90ff;
-    color: white;
     border-radius: 5px;
+    background-color: #007bff;
+    color: white;
     cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.danger {
+    background-color: #ff4d4d;
+}
+
+.danger:hover {
+    background-color: #cc0000;
 }
