@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,33 +7,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Cabeçalho -->
-    <header>
-        <img src="logo_transparente.png" alt="AngelBot" class="logo-central">
-        <h1>Bem-vindo ao AngelBot 👼</h1>
-        <p class="subtitulo">O seu assistente inteligente com respostas rápidas e precisas</p>
-    </header>
+    <div class="container">
+        <!-- Logo -->
+        <img src="logo_transparente.png" alt="AngelBot Logo" class="logo">
 
-    <!-- Conteúdo principal -->
-    <main>
-        <section id="chat-container">
-            <div id="chat-window">
-                <div class="chat-message bot">
-                    <img src="logo.jpg" alt="Bot" class="chat-logo">
-                    <span>Olá! Como posso ajudar você hoje?</span>
-                </div>
-            </div>
-            <div id="input-area">
-                <input type="text" id="user-input" placeholder="Digite sua pergunta...">
+        <!-- Mensagem de boas-vindas -->
+        <h1>Bem-vindo ao AngelBot</h1>
+        <p class="intro">Seu assistente inteligente para Discord.</p>
+
+        <!-- Área de chat -->
+        <div class="chat-container">
+            <div id="chat-box"></div>
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Digite sua mensagem...">
                 <button id="send-btn">Enviar</button>
             </div>
-        </section>
-    </main>
-
-    <!-- Rodapé -->
-    <footer>
-        <p>© 2025 AngelBot - Todos os direitos reservados</p>
-    </footer>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
