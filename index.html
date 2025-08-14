@@ -10,39 +10,94 @@
         font-family: Arial, sans-serif;
         background-color: #1e1e1e;
         color: white;
+        height: 100vh;
+        display: flex;
+    }
+
+    /* Barra lateral */
+    .sidebar {
+        width: 250px;
+        background-color: #2a2a2a;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .sidebar h2 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .history {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .history-item {
+        background-color: #3a3a3a;
+        padding: 8px;
+        border-radius: 5px;
+        margin: 5px 0;
+        cursor: pointer;
+    }
+
+    .history-item:hover {
+        background-color: #505050;
+    }
+
+    .new-chat-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .new-chat-btn:hover {
+        background-color: #0056b3;
+    }
+
+    /* Área principal */
+    .main {
+        flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh;
     }
 
-    .logo {
+    /* Tela inicial */
+    .welcome-screen {
+        text-align: center;
+    }
+
+    .welcome-screen img {
         max-width: 200px;
         margin-bottom: 20px;
     }
 
     .welcome-message {
         font-size: 1.5rem;
-        margin-bottom: 15px;
-        text-align: center;
+        margin-bottom: 20px;
     }
 
+    /* Chat */
     .chat-container {
         width: 90%;
-        max-width: 500px;
+        max-width: 700px;
         background-color: #2a2a2a;
         border-radius: 10px;
         padding: 15px;
-        display: flex;
+        display: none;
         flex-direction: column;
-        gap: 10px;
+        height: 80%;
     }
 
     .messages {
         flex: 1;
         overflow-y: auto;
-        max-height: 300px;
+        max-height: calc(100% - 50px);
     }
 
     .message {
@@ -87,30 +142,58 @@
 </head>
 <body>
 
-<img src="logo.jpg" alt="AngelBot Logo" class="logo">
-<div class="welcome-message">👋 Como posso ajudar hoje?</div>
+<!-- Barra lateral -->
+<div class="sidebar">
+    <h2>💬 AngelBot</h2>
+    <div class="history" id="history"></div>
+    <button class="new-chat-btn" onclick="newChat()">+ Novo Chat</button>
+</div>
 
-<div class="chat-container">
-    <div class="messages" id="messages"></div>
-    <div class="input-container">
-        <input type="text" id="userInput" placeholder="Digite sua mensagem...">
-        <button onclick="sendMessage()">Enviar</button>
+<!-- Área principal -->
+<div class="main">
+    <!-- Tela inicial -->
+    <div class="welcome-screen" id="welcome">
+        <img src="logo.jpg" alt="AngelBot Logo">
+        <div class="welcome-message">👋 Como posso ajudar hoje?</div>
+        <div class="input-container">
+            <input type="text" id="startInput" placeholder="Digite sua mensagem...">
+            <button onclick="startChat()">Enviar</button>
+        </div>
+    </div>
+
+    <!-- Chat -->
+    <div class="chat-container" id="chat">
+        <div class="messages" id="messages"></div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Digite sua mensagem...">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
     </div>
 </div>
 
 <script>
+    let chatHistory = [];
+    let currentChat = [];
+
+    function startChat() {
+        const msg = document.getElementById('startInput').value.trim();
+        if (msg === "") return;
+
+        // Move para o chat
+        document.getElementById('welcome').style.display = 'none';
+        document.getElementById('chat').style.display = 'flex';
+        addMessage(msg, true);
+        simulateResponse(msg);
+    }
+
     function sendMessage() {
         const input = document.getElementById('userInput');
         const msg = input.value.trim();
         if (msg === "") return;
 
         addMessage(msg, true);
+        simulateResponse(msg);
         input.value = "";
-
-        // Simulação de resposta
-        setTimeout(() => {
-            addMessage("Resposta simulada: " + msg, false);
-        }, 1000);
     }
 
     function addMessage(text, isUser) {
@@ -121,15 +204,48 @@
         msgElem.textContent = text;
         messagesDiv.appendChild(msgElem);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+        currentChat.push({ text, isUser });
+    }
+
+    function simulateResponse(userMsg) {
+        setTimeout(() => {
+            const response = "Resposta simulada: " + userMsg;
+            addMessage(response, false);
+        }, 1000);
+    }
+
+    function newChat() {
+        if (currentChat.length > 0) {
+            chatHistory.push(currentChat);
+            updateHistory();
+        }
+        currentChat = [];
+        document.getElementById('messages').innerHTML = '';
+        document.getElementById('welcome').style.display = 'block';
+        document.getElementById('chat').style.display = 'none';
+    }
+
+    function updateHistory() {
+        const historyDiv = document.getElementById('history');
+        historyDiv.innerHTML = '';
+        chatHistory.forEach((chat, index) => {
+            const item = document.createElement('div');
+            item.classList.add('history-item');
+            item.textContent = chat[0]?.text || "Chat sem título";
+            item.onclick = () => loadChat(index);
+            historyDiv.appendChild(item);
+        });
+    }
+
+    function loadChat(index) {
+        currentChat = chatHistory[index];
+        document.getElementById('messages').innerHTML = '';
+        currentChat.forEach(msg => addMessage(msg.text, msg.isUser));
+        document.getElementById('welcome').style.display = 'none';
+        document.getElementById('chat').style.display = 'flex';
     }
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
