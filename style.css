@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: black;
+    background-color: #111;
     color: white;
 }
 
@@ -12,109 +12,104 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 260px;
-    background-color: #111;
-    padding: 15px;
+    width: 250px;
+    background-color: #1c1c1c;
+    padding: 20px;
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
-.menu-item {
-    display: flex;
-    align-items: center;
-    padding: 10px;
+.sidebar a {
     color: white;
     text-decoration: none;
-    font-size: 15px;
-    border-radius: 5px;
-}
-
-.menu-item i {
-    margin-right: 10px;
-}
-
-.menu-item:hover {
-    background-color: #333;
-}
-
-.chats-title {
-    font-size: 14px;
-    margin-top: 20px;
-    margin-bottom: 8px;
-    color: #aaa;
-}
-
-.chat-item {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     padding: 8px;
-    color: white;
-    text-decoration: none;
     border-radius: 5px;
-    font-size: 14px;
 }
 
-.chat-item:hover {
+.sidebar a:hover {
     background-color: #333;
 }
 
-.chat-item.active {
-    background-color: #444;
+.chat-list h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #ccc;
 }
 
-/* Área do chat */
-.chat-area {
+.chat-list a {
+    display: block;
+    padding: 6px 8px;
+    border-radius: 4px;
+    color: white;
+}
+
+.chat-list a:hover {
+    background-color: #333;
+}
+
+/* Área principal */
+.main {
     flex: 1;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background-image: url('fundo-preto.png');
-    background-size: cover;
-    background-position: center;
 }
 
 .logo-container {
+    text-align: center;
     margin-bottom: 10px;
 }
 
 .logo {
-    height: 50px;
+    max-width: 120px;
 }
 
 .chat-box {
-    width: 500px;
-    height: 200px;
-    background-color: #222;
-    border-radius: 10px;
-    padding: 15px;
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    background: #1c1c1c;
+    padding: 10px;
     overflow-y: auto;
+    border-radius: 10px;
+    margin: 20px 0;
 }
 
 .input-area {
-    margin-top: 10px;
     display: flex;
-    gap: 5px;
+    gap: 10px;
 }
 
-.input-area input {
+input {
     flex: 1;
     padding: 10px;
-    border-radius: 5px;
     border: none;
+    border-radius: 6px;
 }
 
-.input-area button {
+button {
     padding: 10px 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
     cursor: pointer;
 }
 
-.input-area button:hover {
-    opacity: 0.8;
+button:hover {
+    background-color: #0056b3;
 }
 
-.clear-btn {
-    background-color: #555;
-    color: white;
+button.danger {
+    background-color: #dc3545;
+}
+
+button.danger:hover {
+    background-color: #b02a37;
 }
