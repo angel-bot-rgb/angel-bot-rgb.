@@ -4,211 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AngelBot</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #111;
-            color: white;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            display: flex;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background-color: #1b1b1b;
-            padding: 20px;
-            width: 250px;
-            min-height: 100vh;
-        }
-
-        .sidebar h2 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #ccc;
-        }
-
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 5px 0;
-        }
-
-        .sidebar a:hover {
-            color: #00bfff;
-        }
-
-        /* Conteúdo principal */
-        .main {
-            flex: 1;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .main img {
-            height: 40px;
-            vertical-align: middle;
-        }
-
-        h1 {
-            margin-top: 5px;
-        }
-
-        /* Caixa de chat */
-        #chat-box {
-            background-color: #1e1e1e;
-            padding: 15px;
-            border-radius: 10px;
-            height: 300px;
-            overflow-y: auto;
-            text-align: left;
-            max-width: 500px;
-            margin: 20px auto;
-        }
-
-        /* Caixa de entrada */
-        .input-area {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin-top: 10px;
-        }
-
-        input {
-            padding: 8px;
-            border-radius: 5px;
-            border: none;
-            width: 250px;
-        }
-
-        button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            color: white;
-        }
-
-        .enviar {
-            background-color: #007bff;
-        }
-
-        .enviar:hover {
-            background-color: #0056b3;
-        }
-
-        .apagar {
-            background-color: #dc3545;
-        }
-
-        .apagar:hover {
-            background-color: #a71d2a;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <h2>Menu</h2>
-            <a href="index.html">Novo chat</a>
-            <a href="procurar.html">Procurar chats</a>
-            <a href="biblioteca.html">Biblioteca</a>
-            <h2>Chats</h2>
-            <a href="editar-imagens.html">Editar imagens AngelBot</a>
-            <a href="adicionar-ingles.html">Adicionar em inglês</a>
-            <a href="erro-python.html">Erro no código Python</a>
-            <a href="imagem-chatbot.html">Imagem de chatbot</a>
-            <a href="criar-chatbot.html">Criar chatbot gratuito</a>
-        </div>
+    <div class="sidebar">
+        <h3>Chats</h3>
+        <ul>
+            <li><a href="#">Editar imagens AngelBot</a></li>
+            <li><a href="#">Adicionar em inglês</a></li>
+            <li><a href="#">Erro no código Python</a></li>
+            <li><a href="#">Imagem de chatbot</a></li>
+            <li><a href="#">Criar chatbot gratuito</a></li>
+        </ul>
+    </div>
 
-        <!-- Área principal -->
-        <div class="main">
-            <img src="img/logo.png" alt="Logo AngelBot"> <br>
+    <div class="main">
+        <header>
+            <img src="logo_transparente.png" alt="Logo AngelBot" class="logo">
             <h1>Como posso ajudar hoje?</h1>
+        </header>
 
-            <div id="chat-box"></div>
+        <div id="chat-box" class="chat-box"></div>
 
-            <div class="input-area">
-                <input type="text" id="user-input" placeholder="Digite sua mensagem...">
-                <button class="enviar" onclick="enviarMensagem()">Enviar</button>
-                <button class="apagar" onclick="apagarMensagens()">Apagar</button>
-            </div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Digite sua mensagem...">
+            <button id="send-btn">Enviar</button>
+            <button id="clear-btn">Apagar</button>
         </div>
     </div>
 
-    <script>
-        // Carregar histórico ao iniciar
-        document.addEventListener("DOMContentLoaded", function () {
-            const chatBox = document.getElementById("chat-box");
-            const storedMessages = JSON.parse(localStorage.getItem("chatHistory")) || [];
-
-            storedMessages.forEach(msg => {
-                const messageElement = document.createElement("p");
-                messageElement.innerHTML = `<strong>${msg.sender}:</strong> ${msg.text}`;
-                chatBox.appendChild(messageElement);
-            });
-            chatBox.scrollTop = chatBox.scrollHeight;
-        });
-
-        // Função para salvar no localStorage
-        function saveMessage(sender, text) {
-            const history = JSON.parse(localStorage.getItem("chatHistory")) || [];
-            history.push({ sender, text });
-            localStorage.setItem("chatHistory", JSON.stringify(history));
-        }
-
-        // Lista de respostas automáticas
-        const respostas = [
-            { pergunta: ["ola", "oi", "bom dia", "boa tarde", "boa noite"], resposta: "Olá! Como você está hoje? 😊" },
-            { pergunta: ["como você está", "tudo bem"], resposta: "Estou ótimo, obrigado por perguntar! E você?" },
-            { pergunta: ["o que você faz", "quem é você"], resposta: "Sou o AngelBot, um chatbot criado para ajudar você!" },
-            { pergunta: ["adeus", "tchau"], resposta: "Até logo! Foi um prazer falar com você 👋" }
-        ];
-
-        // Enviar mensagem
-        function enviarMensagem() {
-            const input = document.getElementById("user-input");
-            const texto = input.value.trim();
-            if (texto === "") return;
-
-            // Exibir mensagem do usuário
-            const chatBox = document.getElementById("chat-box");
-            const userMessage = document.createElement("p");
-            userMessage.innerHTML = `<strong>Você:</strong> ${texto}`;
-            chatBox.appendChild(userMessage);
-            saveMessage("Você", texto);
-
-            // Procurar resposta automática
-            let respostaBot = "Desculpe, não entendi. Pode reformular?";
-            for (let r of respostas) {
-                if (r.pergunta.some(p => texto.toLowerCase().includes(p))) {
-                    respostaBot = r.resposta;
-                    break;
-                }
-            }
-
-            // Exibir resposta do bot
-            setTimeout(() => {
-                const botMessage = document.createElement("p");
-                botMessage.innerHTML = `<strong>Bot:</strong> ${respostaBot}`;
-                chatBox.appendChild(botMessage);
-                saveMessage("Bot", respostaBot);
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 500);
-
-            input.value = "";
-        }
-
-        // Apagar histórico
-        function apagarMensagens() {
-            document.getElementById("chat-box").innerHTML = "";
-            localStorage.removeItem("chatHistory");
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
