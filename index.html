@@ -5,54 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AngelBot</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        
-        <!-- Barra lateral -->
+        <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="menu-top">
-                <a href="novo-chat.html" class="menu-item">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    Novo chat
-                </a>
-                <a href="procurar-chats.html" class="menu-item">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    Procurar chats
-                </a>
-                <a href="biblioteca.html" class="menu-item">
-                    <i class="fa-solid fa-image"></i>
-                    Biblioteca
-                </a>
-            </div>
+            <nav class="menu">
+                <a href="#"><i class="fa-solid fa-pen-to-square"></i> Novo chat</a>
+                <a href="#"><i class="fa-solid fa-magnifying-glass"></i> Procurar chats</a>
+                <a href="#"><i class="fa-solid fa-image"></i> Biblioteca</a>
+            </nav>
 
-            <div class="menu-chats">
-                <p class="chats-title">Chats</p>
-                <a href="editar-imagens.html" class="chat-item active">Editar imagens AngelBot</a>
-                <a href="adicionar-ingles.html" class="chat-item">Adicionar em inglês</a>
-                <a href="erro-python.html" class="chat-item">Erro no código Python</a>
-                <a href="imagem-chatbot.html" class="chat-item">Imagem de chatbot</a>
-                <a href="criar-chatbot.html" class="chat-item">Criar chatbot gratuito</a>
+            <div class="chat-list">
+                <h3>Chats</h3>
+                <a href="editar-imagens.html">Editar imagens AngelBot</a>
+                <a href="adicionar-ingles.html">Adicionar em inglês</a>
+                <a href="erro-python.html">Erro no código Python</a>
+                <a href="imagem-chatbot.html">Imagem de chatbot</a>
+                <a href="criar-chatbot.html">Criar chatbot gratuito</a>
             </div>
         </aside>
 
-        <!-- Área principal do chat -->
-        <main class="chat-area">
+        <!-- Área principal -->
+        <main class="main">
             <div class="logo-container">
-                <img src="logo.png" alt="Logo AngelBot" class="logo">
+                <img src="logo-angelbot.png" alt="Logo AngelBot" class="logo">
             </div>
             <h1>Como posso ajudar hoje?</h1>
-            <div class="chat-box" id="chat-box">
-                <p><strong>Você:</strong> ola</p>
-                <p><strong>Bot:</strong> Entendi sua mensagem.</p>
-            </div>
+
+            <div id="chat-box" class="chat-box"></div>
+
             <div class="input-area">
                 <input type="text" id="user-input" placeholder="Digite sua mensagem...">
-                <button>Enviar</button>
-                <button class="clear-btn">Apagar</button>
+                <button id="send-btn">Enviar</button>
+                <button id="clear-btn" class="danger">Apagar</button>
             </div>
         </main>
     </div>
+
+    <script>
+        const sendBtn = document.getElementById("send-btn");
+        const clearBtn = document.getElementById("clear-btn");
+        const userInput = document.getElementById("user-input");
+        const chatBox = document.getElementById("chat-box");
+
+        sendBtn.addEventListener("click", sendMessage);
+        userInput.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") sendMessage();
+        });
+
+        clearBtn.addEventListener("click", () => {
+            chatBox.innerHTML = "";
+        });
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            const userMsg = `<p><strong>Você:</strong> ${message}</p>`;
+            const botMsg = `<p><strong>Bot:</strong> Entendi sua mensagem.</p>`;
+
+            chatBox.innerHTML += userMsg + botMsg;
+            userInput.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
 </body>
 </html>
