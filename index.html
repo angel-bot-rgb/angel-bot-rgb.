@@ -12,83 +12,122 @@
         color: white;
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
         height: 100vh;
     }
 
-    /* Logo no topo */
     .logo {
-        text-align: center;
-        padding: 20px;
-    }
-    .logo img {
-        max-height: 60px;
+        max-width: 200px;
+        margin-bottom: 20px;
     }
 
-    /* Área central de mensagens */
+    .welcome-message {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
     .chat-container {
-        flex: 1;
+        width: 90%;
+        max-width: 500px;
+        background-color: #2a2a2a;
+        border-radius: 10px;
+        padding: 15px;
         display: flex;
         flex-direction: column;
-        justify-content: center; /* centraliza verticalmente */
-        align-items: center;
-        text-align: center;
-        padding: 10px;
-    }
-    .message {
-        background-color: #2f2f2f;
-        padding: 15px 20px;
-        border-radius: 10px;
-        max-width: 80%;
-        font-size: 18px;
+        gap: 10px;
     }
 
-    /* Área de entrada */
-    .input-area {
-        display: flex;
-        justify-content: center;
-        padding: 15px;
-        background-color: #1b1b1b;
+    .messages {
+        flex: 1;
+        overflow-y: auto;
+        max-height: 300px;
     }
-    .input-area input {
-        width: 70%;
-        padding: 10px;
+
+    .message {
+        background-color: #3a3a3a;
+        padding: 8px;
         border-radius: 5px;
-        border: none;
-        margin-right: 10px;
+        margin: 5px 0;
     }
-    .input-area button {
-        padding: 10px 20px;
+
+    .user-message {
         background-color: #007bff;
+        align-self: flex-end;
+    }
+
+    .input-container {
+        display: flex;
+        gap: 5px;
+        margin-top: 10px;
+    }
+
+    input {
+        flex: 1;
+        padding: 10px;
         border: none;
         border-radius: 5px;
+        outline: none;
+    }
+
+    button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
         color: white;
         cursor: pointer;
     }
-    .input-area button:hover {
+
+    button:hover {
         background-color: #0056b3;
     }
 </style>
 </head>
 <body>
 
-    <!-- Logo -->
-    <div class="logo">
-        <img src="logo.png" alt="AngelBot">
-    </div>
+<img src="logo.jpg" alt="AngelBot Logo" class="logo">
+<div class="welcome-message">👋 Como posso ajudar hoje?</div>
 
-    <!-- Mensagem inicial -->
-    <div class="chat-container">
-        <div class="message">👋 Como posso ajudar hoje?</div>
+<div class="chat-container">
+    <div class="messages" id="messages"></div>
+    <div class="input-container">
+        <input type="text" id="userInput" placeholder="Digite sua mensagem...">
+        <button onclick="sendMessage()">Enviar</button>
     </div>
+</div>
 
-    <!-- Campo de digitar -->
-    <div class="input-area">
-        <input type="text" placeholder="Digite sua mensagem..." />
-        <button>Enviar</button>
-    </div>
+<script>
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const msg = input.value.trim();
+        if (msg === "") return;
+
+        addMessage(msg, true);
+        input.value = "";
+
+        // Simulação de resposta
+        setTimeout(() => {
+            addMessage("Resposta simulada: " + msg, false);
+        }, 1000);
+    }
+
+    function addMessage(text, isUser) {
+        const messagesDiv = document.getElementById('messages');
+        const msgElem = document.createElement('div');
+        msgElem.classList.add('message');
+        if (isUser) msgElem.classList.add('user-message');
+        msgElem.textContent = text;
+        messagesDiv.appendChild(msgElem);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+</script>
 
 </body>
 </html>
+
+
 
 
 
