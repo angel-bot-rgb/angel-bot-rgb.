@@ -1,41 +1,36 @@
-const API_KEY = process.env.OPENAI_API_KEY || ""; // A Vercel vai inserir
-
 document.getElementById("send-btn").addEventListener("click", sendMessage);
-document.getElementById("user-input").addEventListener("keypress", function (e) {
-    if (e.key === "Enter") sendMessage();
-});
+document.getElementById("clear-btn").addEventListener("click", clearChat);
 
-function addMessage(text, sender) {
-    const messageEl = document.createElement("div");
-    messageEl.classList.add("message", sender);
-    messageEl.textContent = text;
-    document.getElementById("messages").appendChild(messageEl);
-    document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+function sendMessage() {
+    let userInput = document.getElementById("user-input").value;
+    if (userInput.trim() === "") return;
+
+    let chatBox = document.getElementById("chat-box");
+
+    let userMessage = document.createElement("p");
+    userMessage.innerHTML = `<strong>Você:</strong> ${userInput}`;
+    chatBox.appendChild(userMessage);
+
+    // Resposta automática
+    let botMessage = document.createElement("p");
+    botMessage.innerHTML = `<strong>Bot:</strong> ${getBotResponse(userInput)}`;
+    chatBox.appendChild(botMessage);
+
+    document.getElementById("user-input").value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-async function sendMessage() {
-    const inputEl = document.getElementById("user-input");
-    const text = inputEl.value.trim();
-    if (!text) return;
+function getBotResponse(message) {
+    // Aqui você pode trocar pelas respostas reais do seu bot
+    if (message.toLowerCase().includes("ola")) {
+        return "Olá! Como você está hoje?";
+    } else if (message.toLowerCase().includes("ajuda")) {
+        return "Claro! Me diga com o que você precisa.";
+    } else {
+        return "Entendi sua mensagem.";
+    }
+}
 
-    addMessage(text, "user");
-    inputEl.value = "";
-
-    addMessage("AngelBot está digitando...", "bot");
-
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${API_KEY}`
-        },
-        body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: text }]
-        })
-    });
-
-    const data = await response.json();
-    document.querySelector("#messages .bot:last-child").textContent =
-        data.choices[0].message.content;
+function clearChat() {
+    document.getElementById("chat-box").innerHTML = "";
 }
