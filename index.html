@@ -1,150 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Angel Bot</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        height: 100vh;
-        font-family: Arial, sans-serif;
-        background-color: #121212;
-        color: white;
-    }
-
-    /* Barra lateral */
-    .sidebar {
-        width: 250px;
-        background-color: #1e1e1e;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px 10px;
-    }
-
-    .sidebar img {
-        width: 120px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-
-    /* Área principal */
-    .main {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 20px;
-    }
-
-    .main img {
-        width: 100px;
-        height: auto;
-        margin-bottom: 15px;
-    }
-
-    h1 {
-        margin: 0 0 20px;
-    }
-
-    #chat-container {
-        background: #1e1e1e;
-        border-radius: 10px;
-        padding: 15px;
-        width: 90%;
-        max-width: 600px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #messages {
-        height: 250px;
-        overflow-y: auto;
-        border-bottom: 1px solid #333;
-        padding-bottom: 10px;
-        width: 100%;
-        text-align: left;
-    }
-
-    #input-container {
-        display: flex;
-        margin-top: 10px;
-        width: 100%;
-    }
-
-    #user-input {
-        flex: 1;
-        padding: 10px;
-        border: none;
-        border-radius: 5px 0 0 5px;
-        outline: none;
-    }
-
-    #send-btn {
-        background-color: #4cafef;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 0 5px 5px 0;
-        cursor: pointer;
-    }
-
-    #send-btn:hover {
-        background-color: #3aa7e0;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngelBot</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <img src="logo.jpg" alt="Logo preta" class="sidebar-logo">
+        <ul class="chat-list">
+            <li>📜 Chat 1</li>
+            <li>📜 Chat 2</li>
+            <li>📜 Chat 3</li>
+        </ul>
+    </div>
 
-<!-- Barra lateral -->
-<div class="sidebar">
-    <img src="logo-preta.png" alt="Logo preta">
-    <div>📜 Chat 1</div>
-    <div>📜 Chat 2</div>
-    <div>📜 Chat 3</div>
-</div>
-
-<!-- Área principal -->
-<div class="main">
-    <img src="logo-transparente.png" alt="Logo transparente">
-    <h1>Como posso ajudar hoje?</h1>
-
-    <div id="chat-container">
-        <div id="messages"></div>
-        <div id="input-container">
+    <!-- Conteúdo principal -->
+    <div class="main">
+        <div class="logo-center">
+            <img src="logo_transparente.png" alt="Logo transparente">
+        </div>
+        <h1>Como posso ajudar hoje?</h1>
+        <div class="chat-box" id="chat-box"></div>
+        <div class="input-area">
             <input type="text" id="user-input" placeholder="Digite sua mensagem...">
             <button id="send-btn">Enviar</button>
         </div>
     </div>
-</div>
 
-<script>
-document.getElementById("send-btn").addEventListener("click", function(){
-    let input = document.getElementById("user-input");
-    let message = input.value.trim();
-    if(message){
-        let msgDiv = document.createElement("div");
-        msgDiv.textContent = "Você: " + message;
-        document.getElementById("messages").appendChild(msgDiv);
-
-        // Simulação de resposta
-        setTimeout(() => {
-            let botDiv = document.createElement("div");
-            botDiv.textContent = "AngelBot: Esta é uma resposta simulada 😄";
-            document.getElementById("messages").appendChild(botDiv);
-        }, 500);
-
-        input.value = "";
-    }
-});
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
