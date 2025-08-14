@@ -7,18 +7,34 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Cabeçalho -->
+    <header>
+        <img src="logo_transparente.png" alt="AngelBot" class="logo-central">
+        <h1>Bem-vindo ao AngelBot 👼</h1>
+        <p class="subtitulo">O seu assistente inteligente com respostas rápidas e precisas</p>
+    </header>
 
-    <!-- Aba de Chats -->
-    <div class="chat-header">
-        <img src="frontend/logo_preto.png" alt="Logo com fundo preto" class="logo-preto">
-        <h2>Chats</h2>
-    </div>
+    <!-- Conteúdo principal -->
+    <main>
+        <section id="chat-container">
+            <div id="chat-window">
+                <div class="chat-message bot">
+                    <img src="logo.jpg" alt="Bot" class="chat-logo">
+                    <span>Olá! Como posso ajudar você hoje?</span>
+                </div>
+            </div>
+            <div id="input-area">
+                <input type="text" id="user-input" placeholder="Digite sua pergunta...">
+                <button id="send-btn">Enviar</button>
+            </div>
+        </section>
+    </main>
 
-    <!-- Mensagem de boas-vindas -->
-    <div class="welcome">
-        <img src="frontend/logo_transparente.png" alt="Logo transparente" class="logo-transparente">
-        <h1>Bem-vindo ao AngelBot</h1>
-    </div>
+    <!-- Rodapé -->
+    <footer>
+        <p>© 2025 AngelBot - Todos os direitos reservados</p>
+    </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
